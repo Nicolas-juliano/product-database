@@ -1,0 +1,128 @@
+#include <stdio.h>
+#include <string.h>
+
+typedef struct Produto {
+	int Codigo;
+	char Nome[15];
+	float Preco;
+	int Quantidade;
+} Produto;
+
+Produto estoque[100];
+int count = 0;
+
+void insert(int cod, char name[], float valor, int quant);
+void listProd();
+void searchName(char sname[]);
+void deleteName(char dname[]);
+char selecao;
+
+int main() {
+	while (1) {
+		printf("=== Menu de opções === \n1. Inserir produto \n2. Listar todos os produtos \n3. Buscar produto por nome \n4. Excluir produto por nome \n5. Sair \nEscolha uma opção:");
+		scanf(" %c", &selecao);
+		getchar();
+		
+		switch (selecao) {
+			case '1': {
+				int cod;
+				char name[15];
+				float valor;
+				int quant;
+				printf("Digite o código do produto:\n");
+				scanf("%d", &cod);
+				getchar();		
+				printf("Digite o nome do produto:\n");
+				fgets(name, 15, stdin);
+				name[strcspn(name, "\n")] = 0;
+				printf("Digite o preço do produto:\n");
+				scanf("%f", &valor);
+				printf("Digite a quantidade em estoque:\n");
+				scanf("%d", &quant);
+	  	  	insert(cod, name, valor, quant);		
+				break;
+			}
+			case '2':
+				listProd();
+				break;
+			case '3':{
+				char Sname[15];
+				printf("Digite o nome do produto:");
+				fgets(Sname, 15, stdin);
+				Sname[strcspn(Sname, "\n")] = 0;
+				searchName(Sname);
+				break;
+			
+			}
+			
+			case '4':{
+				char Dname[15];
+				printf("Digite o nome do produto:");
+				fgets(Dname, 15, stdin);
+				Dname[strcspn(Dname, "\n")] = 0;
+				deleteName(Dname);		
+				break;		
+			}
+			case '5':
+				printf("Saindo do programa...");
+				return 0;
+			default:
+			printf("Erro: Opção inválida!\n");
+		
+  }
+
+ }
+}
+void insert(int cod, char name[], float valor, int quant){
+	for (int i = 0; i < count; i++){
+				if (estoque[i].Codigo == cod){					
+					printf("Erro: Este código já existe!\n");
+					return;
+				}
+			}
+	Produto p;
+	p.Codigo=cod;
+	strcpy(p.Nome, name);
+	p.Preco = valor;
+	p.Quantidade = quant;
+	if (count<100){
+		estoque[count]=p;
+		count++;
+		printf("Produto inserido com sucesso!\n");
+		}
+	else{ 
+	printf("Erro: Estoque cheio! \n");
+	}
+
+}
+void listProd(){
+		for (int i = 0; i < count; i++){
+			 printf("Código: %d, Nome: %s, Preço: %.2f, Quantidade: %d\n", estoque[i].Codigo, estoque[i].Nome, estoque[i].Preco, estoque[i].Quantidade);
+	   	}
+}
+void searchName(char sname[]){
+	for (int i = 0; i < count; i++){
+		if (strcmp(estoque[i].Nome, sname) == 0){
+			printf("Código: %d, Nome %s, Preço: %.2f, Quantidade: %d\n", estoque[i].Codigo, estoque[i].Nome, estoque[i].Preco, estoque[i].Quantidade);
+		return;
+		}
+	
+	}
+	printf("Erro: Este produto não existe!\n");
+}
+void deleteName(char dname[]){
+	for (int i = 0; i < count; i++){
+		if (strcmp(estoque[i].Nome, dname) == 0){
+			for (int j = i; j < count - 1; j++){
+				estoque[j] = estoque[j + 1];
+			
+			}
+			count --;
+			printf("Produto excluído!\n");		
+			return;
+		}
+	
+	}
+	printf("Erro: Produto não encontrado!\n");
+} 
+	
