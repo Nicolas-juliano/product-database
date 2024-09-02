@@ -33,7 +33,6 @@ int main() {
 				scanf("%d", &cod);
 				getchar();		
 				printf("Digite o nome do produto:\n");
-				//fgets(name, 15, stdin);
                                 scanf("%s", name);
 				name[strcspn(name, "\n")] = 0;
 				printf("Digite o preço do produto:\n");
@@ -49,7 +48,6 @@ int main() {
 			case '3':{
 				char Sname[15];
 				printf("Digite o nome do produto:");
-				//fgets(Sname, 15, stdin);
                                 scanf("%s", Sname);
 				Sname[strcspn(Sname, "\n")] = 0;
 				searchName(Sname);
@@ -60,7 +58,6 @@ int main() {
 			case '4':{
 				char Dname[15];
 				printf("Digite o nome do produto:");
-				//fgets(Dname, 15, stdin);
                                 scanf("%s", Dname);
 				Dname[strcspn(Dname, "\n")] = 0;
 				deleteName(Dname);		
